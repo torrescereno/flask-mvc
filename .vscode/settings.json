@@ -1,0 +1,14 @@
+{
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--ignore=E226,E302,E41,E24,W504",
+        "--verbose",
+        "--max-line-length=100"
+    ],
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length=100"
+    ],
+    "editor.formatOnSave": true
+}
