@@ -1,13 +1,13 @@
-from flask import Flask, jsonify, request
+from flask import Flask
 
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-from flask_jwt_extended import JWTManager
 
-from .db import db
+from app.database.db import db
+from app.extensions.ext import ma, jwt
 
-jwt = JWTManager()
+
+from app.user.controllers.user_controller import user_api_bp
+from app.auth.controllers.auth_controller import auth_api_bp
 
 
 def create_app():
@@ -20,20 +20,16 @@ def create_app():
 
     jwt.init_app(app)
     db.init_app(app)
+    ma.init_app(app)
 
     @app.route("/", methods=["GET"])
     @jwt_required()
     def home():
-        current_user = get_jwt_identity()
-        return jsonify(loggin_in_as=current_user), 200
+        # current_user = get_jwt_identity()
+        # return jsonify(loggin_in_as=current_user), 200
+        return {"message": "welcome"}
 
-    @app.route("/login", methods=["POST"])
-    def login():
-        username = request.json.get("username", None)
-        password = request.json.get("password", None)
-        if username != "admin" or password != "123":
-            return jsonify(msg="Usuario no es valido"), 401
-        access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token)
+    app.register_blueprint(user_api_bp)
+    app.register_blueprint(auth_api_bp)
 
     return app

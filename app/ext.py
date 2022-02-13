@@ -1,1 +1,0 @@
-# Instanciación de las extensiones
