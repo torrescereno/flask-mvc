@@ -2,9 +2,11 @@
 __pycache__
 *.pyc
 
-# Entorno virtual
+# Viertual env
 env
 
-# Base de datos
+# Data base
 db.sqlite3
 
+# Migrations
+migrations/
