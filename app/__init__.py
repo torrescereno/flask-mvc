@@ -3,7 +3,7 @@ from flask import Flask, jsonify
 from flask_jwt_extended import jwt_required
 
 from app.database.db import db
-from app.extensions.ext import ma, jwt
+from app.extensions.ext import ma, jwt, migrate
 
 
 from app.user.controllers.user_controller import user_api_bp
@@ -11,7 +11,6 @@ from app.auth.controllers.auth_controller import auth_api_bp
 
 
 def create_app() -> Flask:
-
     app = Flask(__name__)
 
     app.config["SECRET_KEY"] = "supersecreto"
@@ -21,6 +20,7 @@ def create_app() -> Flask:
     jwt.init_app(app)
     db.init_app(app)
     ma.init_app(app)
+    migrate.init_app(app, db)
 
     @app.route("/", methods=["GET"])
     @jwt_required()
