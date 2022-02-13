@@ -1,10 +1,14 @@
-from marshmallow import Schema, fields
+from app import ma
+from app.user.models.user_model import User
 
 
-class UserSchema(Schema):
-    id = fields.Int()
-    name = fields.Str()
-    password = fields.Str()
+class UserSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = User
+
+    id = ma.auto_field()
+    name = ma.auto_field()
+    password = ma.auto_field()
 
 
 user_schema = UserSchema()
