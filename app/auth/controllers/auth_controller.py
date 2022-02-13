@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from flask_restful import Api, Resource
 
 from flask_jwt_extended import create_access_token
@@ -14,9 +14,9 @@ class ApiAuth(Resource):
         username = request.json.get("username", None)
         password = request.json.get("password", None)
         if username != "admin" or password != "123":
-            return jsonify(message="Invalid user"), 401
+            return {"message": "Invalid user"}, 402
         access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token)
+        return {"access_token": access_token}, 200
 
 
 api.add_resource(ApiAuth, "/login", endpoint="login")
