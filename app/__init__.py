@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 from flask_jwt_extended import jwt_required
 
@@ -27,7 +27,7 @@ def create_app():
     def home():
         # current_user = get_jwt_identity()
         # return jsonify(loggin_in_as=current_user), 200
-        return {"message": "welcome"}
+        return jsonify(message="Welcome"), 200
 
     app.register_blueprint(user_api_bp)
     app.register_blueprint(auth_api_bp)

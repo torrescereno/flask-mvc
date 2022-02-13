@@ -14,6 +14,9 @@ class ApiAuth(Resource):
         username = request.json.get("username", None)
         password = request.json.get("password", None)
         if username != "admin" or password != "123":
-            return jsonify(msg="Usuario no es valido"), 401
+            return jsonify(message="Invalid user"), 401
         access_token = create_access_token(identity=username)
         return jsonify(access_token=access_token)
+
+
+api.add_resource(ApiAuth, "/login", endpoint="login")
