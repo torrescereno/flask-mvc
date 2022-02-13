@@ -9,7 +9,10 @@ def save_new_user(data: object) -> Tuple[Dict[str, str], int]:
     user = User.query.filter_by(id=data["id"]).first()
     if user is None:
         new_user = User(
-            id=data["id"], name=data["name"], email=data["email"], password=data["password"]
+            id=data["id"],
+            name=data["name"],
+            email=data["email"],
+            password=data["password"],
         )
         save_chages(new_user)
         result = user_schema.dump(User.query.get(new_user.id))

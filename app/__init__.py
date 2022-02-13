@@ -1,13 +1,13 @@
-from flask import Flask, jsonify
-
-from flask_jwt_extended import jwt_required
+from flask import Flask
 
 from app.database.db import db
 from app.extensions.ext import ma, jwt, migrate
 
+from cli import create_db, create_user, run_test
 
 from app.user.controllers.user_controller import user_api_bp
 from app.auth.controllers.auth_controller import auth_api_bp
+from app.home.controllers.home_controller import home_api_bp
 
 
 def create_app() -> Flask:
@@ -22,14 +22,12 @@ def create_app() -> Flask:
     ma.init_app(app)
     migrate.init_app(app, db)
 
-    @app.route("/", methods=["GET"])
-    @jwt_required()
-    def home():
-        # current_user = get_jwt_identity()
-        # return jsonify(loggin_in_as=current_user), 200
-        return jsonify(message="Welcome"), 200
+    app.cli.add_command(create_db)
+    app.cli.add_command(create_user)
+    app.cli.add_command(run_test)
 
     app.register_blueprint(user_api_bp)
     app.register_blueprint(auth_api_bp)
+    app.register_blueprint(home_api_bp)
 
     return app
