@@ -1,3 +1,6 @@
+.DS_Store
+.vscode
+
 # Cache
 __pycache__
 *.pyc
@@ -10,3 +13,7 @@ db.sqlite3
 
 # Migrations
 migrations/
+
+# Coverage
+.coverage
+htmlcov

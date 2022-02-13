@@ -37,3 +37,27 @@ def run_test():
 
     rv = pytest.main(["-v"])
     exit(rv)
+
+
+@click.command(name="coverage")
+@with_appcontext
+def run_converage():
+    """Run coverage"""
+    import coverage
+    import pytest
+
+    cov = coverage.Coverage()
+    cov.start()
+
+    rv = pytest.main(["-v"])
+
+    cov.stop()
+    cov.save()
+
+    print("Coverage summary")
+
+    cov.report()
+    cov.html_report()
+    cov.erase()
+
+    exit(rv)
