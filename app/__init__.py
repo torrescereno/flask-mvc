@@ -10,7 +10,7 @@ from app.user.controllers.user_controller import user_api_bp
 from app.auth.controllers.auth_controller import auth_api_bp
 
 
-def create_app():
+def create_app() -> Flask:
 
     app = Flask(__name__)
 
