@@ -1,7 +1,7 @@
 from typing import Dict, Tuple
 from app.user.models.user_model import User
 from app.user.schemas.user_schema import user_schema
-from app.database.db import save_chages
+from app.database.db import save_changes
 
 
 def save_new_user(data: object) -> Tuple[Dict[str, str], int]:
@@ -14,7 +14,7 @@ def save_new_user(data: object) -> Tuple[Dict[str, str], int]:
             email=data["email"],
             password=data["password"],
         )
-        save_chages(new_user)
+        save_changes(new_user)
         result = user_schema.dump(User.query.get(new_user.id))
         return {"message": "Created new user", "user": result}, 200
 

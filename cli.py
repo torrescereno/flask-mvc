@@ -5,7 +5,7 @@ from flask.cli import with_appcontext
 from app import db
 
 from app.user.models.user_model import User
-from app.database.db import save_chages
+from app.database.db import save_changes
 
 
 @click.command(name="db")
@@ -26,7 +26,7 @@ def create_user(name: str, email: str, password: str):
     id = str(id.int)
     id = int(id[:4])
     user = User(id=id, name=name, email=email, password=password)
-    save_chages(user)
+    save_changes(user)
 
 
 @click.command(name="test")

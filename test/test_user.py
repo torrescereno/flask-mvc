@@ -1,6 +1,8 @@
+import uuid
+
 from .base import BaseConfig
 from app.user.models.user_model import User
-from app.user.services.user_services import get_all_users, get_a_user
+from app.user.services.user_services import get_all_users, get_a_user, save_new_user
 from app.user.schemas.user_schema import users_schema, user_schema
 from app import db
 
@@ -12,6 +14,8 @@ class TestUserModel(BaseConfig):
         get_user = User.query.get(user.id)
         assert get_user.id == 0
 
+
+class TestUserServices(BaseConfig):
     def test_get_all_users(self):
         user = User(id=0, name="test", email="test@test.com", password="123")
         db.session.add(user)
@@ -27,3 +31,27 @@ class TestUserModel(BaseConfig):
         assert user is not None
         result = user_schema.dump(user)
         assert result is not []
+
+    def test_save_new_user(self):
+
+        id = uuid.uuid4()
+        id = str(id.int)
+        id = int(id[:4])
+
+        data = {
+            "id": id,
+            "name": "test",
+            "email": "test@test.com",
+            "password": "123",
+        }
+
+        result = save_new_user(data)
+        assert result[0] is not []
+        assert result[1] == 200
+
+        # new_user = User(
+        #     id=data["id"],
+        #     name=data["name"],
+        #     email=data["email"],
+        #     password=data["password"],
+        # )
