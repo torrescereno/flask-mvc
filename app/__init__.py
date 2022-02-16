@@ -7,9 +7,9 @@ from cli import create_db, create_user, run_test, run_converage
 
 from config.config import DevelopmentConfig
 
-from app.user.controllers.user_controller import user_api_bp
-from app.auth.controllers.auth_controller import auth_api_bp
-from app.home.controllers.home_controller import home_api_bp
+from app.user.views.user_view import user_api_bp
+from app.auth.views.auth_view import auth_api_bp
+from app.home.views.home_view import home_api_bp
 
 
 def create_app(config=DevelopmentConfig) -> Flask:

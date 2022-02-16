@@ -1,8 +1,8 @@
 import uuid
 
-from .base import BaseConfig
+from ..base import BaseConfig
 from app.user.models.user_model import User
-from app.user.services.user_services import get_all_users, get_a_user, save_new_user
+from app.user.services.user_services import UserService
 from app.user.schemas.user_schema import users_schema, user_schema
 from app import db
 
@@ -19,7 +19,7 @@ class TestUserServices(BaseConfig):
     def test_get_all_users(self):
         user = User(id=0, name="test", email="test@test.com", password="123")
         db.session.add(user)
-        users = get_all_users()
+        users = UserService.get_all_users()
         assert users is not None
         result = users_schema.dump(users)
         assert result is not []
@@ -27,7 +27,7 @@ class TestUserServices(BaseConfig):
     def test_get_user(self):
         user = User(id=0, name="test", email="test@test.com", password="123")
         db.session.add(user)
-        user = get_a_user(email=user.email)
+        user = UserService.get_a_user(email=user.email)
         assert user is not None
         result = user_schema.dump(user)
         assert result is not []
@@ -45,7 +45,7 @@ class TestUserServices(BaseConfig):
             "password": "123",
         }
 
-        result = save_new_user(data)
+        result = UserService.save_new_user(data)
         assert result[0] is not []
         assert result[1] == 200
 

@@ -1,32 +1,31 @@
-from flask import Blueprint, request
-from flask_restful import Api, Resource
-
-from app.user.schemas.user_schema import user_schema, users_schema
-from app.user.services.user_services import save_new_user, get_all_users
-
-user_api_bp = Blueprint("user_api_bp", __name__)
-
-api = Api(user_api_bp)
+from typing import Dict, Tuple
+from app.user.models.user_model import User
+from app.user.schemas.user_schema import user_schema
+from app.database.db import save_changes
 
 
-class ApiUser(Resource):
-    def get(self):
-        users = get_all_users()
-        result = users_schema.dump(users)
-        return {"users": result}
+class UserController:
+    def save_new_user(data: object) -> Tuple[Dict[str, str], int]:
 
-    def post(self):
-        json_data = request.get_json()
-        if not json_data:
-            return {"message": "No input data provider"}, 400
+        user = User.get_user_by_id(cls=User, user_id=data["id"])
+        if user is None:
+            new_user = User(
+                id=data["id"],
+                name=data["name"],
+                email=data["email"],
+                password=data["password"],
+            )
+            save_changes(new_user)
+            result = user_schema.dump(User.query.get(new_user.id))
+            return {"message": "Created new user", "user": result}, 200
 
-        try:
-            data = user_schema.load(json_data)
-        except Exception as err:
-            return err.messages, 422
+        result = {
+            "message": "User already exists",
+        }
+        return result, 409
 
-        result = save_new_user(data)
-        return result
+    def get_a_user(email: str) -> User:
+        return User.get_user_by_email(cls=User, user_email=email)
 
-
-api.add_resource(ApiUser, "/users", endpoint="users")
+    def get_all_users() -> Tuple[User]:
+        return User.get_users(cls=User)

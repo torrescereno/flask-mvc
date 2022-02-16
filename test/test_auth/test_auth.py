@@ -1,4 +1,4 @@
-from .base import BaseConfig
+from ..base import BaseConfig
 from flask_jwt_extended import create_access_token
 
 
