@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 from flask_restful import Api, Resource
 
-from app.user.schemas.user_schema import user_schema, users_schema
-from app.user.controllers.user_controller import UserController
+from app.api.schemas.user_schema import user_schema, users_schema
+from app.api.controllers.user_controller import UserController
 
 user_api_bp = Blueprint("user_api_bp", __name__)
 
@@ -19,7 +19,6 @@ class ApiUser(Resource):
     def post(self):
         json_data = request.get_json()
 
-        # Mover al manejador de excepciones
         if not json_data:
             return {"message": "No input data provider"}, 400
 
@@ -27,7 +26,6 @@ class ApiUser(Resource):
             data = user_schema.load(json_data)
         except Exception as err:
             return err.messages, 422
-        # ##### #
 
         result = UserController.save_new_user(data)
         return result

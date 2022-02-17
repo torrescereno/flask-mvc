@@ -7,8 +7,8 @@ class User(db.Model):
     __tablename__ = "user"
 
     id = Column(BigInteger, primary_key=True)
+    username = Column(String, nullable=False)
     name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
     email = Column(String, nullable=False)
     password = Column(String, nullable=False)
     is_admin = Column(Boolean, default=False)
@@ -16,10 +16,10 @@ class User(db.Model):
     def __repr__(self) -> str:
         return f"<User> {self.email}"
 
-    def set_password(self, password: str):
+    def set_password(self, password) -> str:
         self.password = generate_password_hash(password)
 
-    def check_password(self, password: str):
+    def check_password(self, password) -> bool:
         return check_password_hash(self.password, password)
 
     @staticmethod
@@ -27,8 +27,12 @@ class User(db.Model):
         return User.query.filter_by(id=user_id).first()
 
     @staticmethod
-    def get_user_by_email(user_email):
+    def get_user_by_email(user_email: str):
         return User.query.filter_by(email=user_email).first()
+
+    @staticmethod
+    def get_user_by_username(username: str):
+        return User.query.filter_by(username=username).first()
 
     @staticmethod
     def get_users():

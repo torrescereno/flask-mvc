@@ -1,6 +1,6 @@
 from typing import Dict, Tuple
-from app.user.models.user_model import User
-from app.user.schemas.user_schema import user_schema
+from app.api.models.user_model import User
+from app.api.schemas.user_schema import user_schema
 from app.database.db import save_changes
 
 
@@ -8,15 +8,15 @@ class UserController:
     def save_new_user(data: object) -> Tuple[Dict[str, str], int]:
 
         id = data["id"]
+        username = data["name"]
         name = data["name"]
-        last_name = data["last_name"]
         email = data["email"]
         password = data["password"]
 
         user = User.get_user_by_id(user_id=id)
         if user is None:
 
-            new_user = User(id=id, name=name, last_name=last_name, email=email)
+            new_user = User(id=id, username=username, name=name, email=email)
             new_user.set_password(password)
 
             save_changes(new_user)
