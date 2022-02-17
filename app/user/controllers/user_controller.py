@@ -7,11 +7,12 @@ from app.database.db import save_changes
 class UserController:
     def save_new_user(data: object) -> Tuple[Dict[str, str], int]:
 
-        user = User.get_user_by_id(cls=User, user_id=data["id"])
+        user = User.get_user_by_id(user_id=data["id"])
         if user is None:
             new_user = User(
                 id=data["id"],
                 name=data["name"],
+                last_name=data["last_name"],
                 email=data["email"],
                 password=data["password"],
             )
@@ -25,7 +26,7 @@ class UserController:
         return result, 409
 
     def get_a_user(email: str) -> User:
-        return User.get_user_by_email(cls=User, user_email=email)
+        return User.get_user_by_email(user_email=email)
 
     def get_all_users() -> Tuple[User]:
-        return User.get_users(cls=User)
+        return User.get_users()

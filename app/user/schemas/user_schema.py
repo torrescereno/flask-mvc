@@ -8,6 +8,7 @@ class UserSchema(ma.SQLAlchemySchema):
 
     id = ma.auto_field()
     name = ma.auto_field()
+    last_name = ma.auto_field()
     email = ma.auto_field()
     password = ma.auto_field()
 
