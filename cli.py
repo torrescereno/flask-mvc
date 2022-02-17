@@ -4,7 +4,7 @@ import click
 from flask.cli import with_appcontext
 from app import db
 
-from app.user.models.user_model import User
+from app.api.models.user_model import User
 from app.database.db import save_changes
 
 
@@ -16,16 +16,18 @@ def create_db():
 
 
 @click.command(name="admin")
+@click.argument("username")
 @click.argument("name")
 @click.argument("email")
 @click.argument("password")
 @with_appcontext
-def create_user(name: str, email: str, password: str):
+def create_user(username: str, name: str, email: str, password: str):
     """Create user"""
     id = uuid.uuid4()
     id = str(id.int)
     id = int(id[:4])
-    user = User(id=id, name=name, email=email, password=password)
+    user = User(id=id, username=username, name=name, email=email)
+    user.set_password(password)
     save_changes(user)
 
 
