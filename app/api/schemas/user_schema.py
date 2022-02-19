@@ -1,6 +1,5 @@
-from app import ma
-
 from app.api.models.user_model import User
+from app.extensions.ext import ma
 
 
 class UserSchema(ma.SQLAlchemySchema):
