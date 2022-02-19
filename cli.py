@@ -43,7 +43,7 @@ def run_test():
 
 @click.command(name="coverage")
 @with_appcontext
-def run_converage():
+def run_coverage():
     """Run coverage"""
     import coverage
     import pytest
