@@ -1,9 +1,11 @@
 .DS_Store
 .vscode
+.idea
 
 # Cache
 __pycache__
 *.pyc
+.pytest_cache
 
 # Viertual env
 env
