@@ -1,17 +1,17 @@
 from flask import Blueprint, request
-from flask_restful import Api, Resource
 from flask_jwt_extended import create_access_token
+from flask_restful import Api, Resource
 
 from app.api.models.user_model import User
 
 auth_api_bp = Blueprint("auth_api_bp", __name__)
 
-
 api = Api(auth_api_bp)
 
 
 class ApiAuth(Resource):
-    def post(self):
+    @staticmethod
+    def post():
         username = request.json.get("username", None)
 
         user = User.get_user_by_username(username=username)

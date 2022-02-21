@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, BigInteger, Boolean
 from werkzeug.security import generate_password_hash, check_password_hash
+
 from app.database.db import db
 
 
@@ -14,10 +15,11 @@ class User(db.Model):
     is_admin = Column(Boolean, default=False)
 
     def __repr__(self) -> str:
-        return f"<User> {self.email}"
+        return "<User> {}".format(self.email)
 
     def set_password(self, password) -> str:
         self.password = generate_password_hash(password)
+        return self.password
 
     def check_password(self, password) -> bool:
         return check_password_hash(self.password, password)

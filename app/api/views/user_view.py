@@ -18,7 +18,7 @@ class ApiUser(Resource):
         return {"users": result}
 
     @staticmethod
-    def post(self):
+    def post():
         json_data = request.get_json()
 
         if not json_data:
