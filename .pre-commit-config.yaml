@@ -11,12 +11,16 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
-        additional_dependencies: ["flake8-bandit", "flake8-bugbear"]
+        additional_dependencies:
+          - flake8-bugbear
+          - flake8-comprehensions
+          - flake8-simplify
 
   - repo: https://github.com/psf/black
-    rev: 21.7b0
+    rev: 21.9b0
     hooks:
       - id: black
+        args: [ --line-length=79 ]
         language_version: python3
 
   - repo: https://github.com/asottile/pyupgrade
