@@ -26,6 +26,7 @@ class UserController:
         result = {
             "message": "User already exists",
         }
+
         return result, 409
 
     @staticmethod
